@@ -1,24 +1,42 @@
-import React, { useContext } from 'react'
-import { ContextProvider, SocketContext } from '../../SocketContext'
+import React, { useState,useEffect } from 'react'
+//import { SocketContext } from '../../SocketContext'
 import "./videoplayer.css"
 import { BsFillMicFill,BsFillCameraVideoFill,BsFillPersonPlusFill,BsClipboardCheck } from "react-icons/bs"
 import { HiPhoneMissedCall } from "react-icons/hi"
+import {FiSend } from "react-icons/fi"
+import { useNavigate } from 'react-router-dom'
+
+const VideoPlayer = ({ socket, username, room }) => {
+    //const {  stream,userVideo,myVideo,ended,accepted,me,leavecall } = useContext(SocketContext);
+
+    const [currentMessage, setCurrentMessage] = useState("");
+    const [messageList, setMessageList] = useState([]);
+
+    const sendMessage = async () => {
+      if (currentMessage !== "") {
+        const messageData = {
+        room: room,
+        author: username,
+        message: currentMessage,
+        time:
+          new Date(Date.now()).getHours() +
+          ":" +
+          new Date(Date.now()).getMinutes(),
+      };
+
+      await socket.emit("send_message", messageData);
+      setMessageList((list) => [...list, messageData]);
+      setCurrentMessage("");
+    }
+  };
+
+  useEffect(() => {
+    socket.on("receive_message", (data) => {
+      setMessageList((list) => [...list, data]);
+    });
+  }, [socket]);
 
 
-
-const VideoPlayer = () => {
-    const { call,
-        accepted,
-        ended,
-        myVideo,
-        userVideo,
-        stream,
-        name,
-        setName,
-        me,
-        callUser,
-        leavecall,
-        answercall, } = useContext(SocketContext);
     return (
         <div className='videoplayer'>
             <div className='header'>
@@ -27,29 +45,59 @@ const VideoPlayer = () => {
                 </div>
                 <div className='next-header'>
                     <div className='btns1'>
-                    <button><BsFillMicFill /> Mute</button>
-                    <button><BsFillCameraVideoFill /> Stop Video</button>
-                    <button><BsClipboardCheck /> Copy Meeting Code</button>
-                    <button><BsFillPersonPlusFill /> invite</button>
+                    <button>Mute <BsFillMicFill /> </button>
+                    <button> Stop Video <BsFillCameraVideoFill /> </button>
+                   <button> Copy Meeting Code <BsClipboardCheck /> </button> 
+                    <button> invite <BsFillPersonPlusFill /> </button>
                     </div>
 
                     <div className='btns2'>
-                    <button><HiPhoneMissedCall /> Leave</button>
+                    <button ><HiPhoneMissedCall /> Leave</button>
                     </div>
                 </div>
             </div>
 
             <div className='broadcast'>
             <div className='meet'>
-            { (
+
+            {/* { stream && (
                 <video playsInline muted ref={myVideo} autoPlay />
-            )
-            }
+            )}
+
+            {accepted && (
+                <video playsInline muted ref={userVideo} autoPlay />
+            )} */}
+
 
             </div>
             
             <div className='chat'>
-                Chat
+                <div className='participants'>
+                        <p>Participants </p>
+
+                </div>
+
+                <div className='conversation'>
+                    <p>Meeting Chat</p>
+
+                    <div className='chat-content'>
+                        {messageList.map((messagecontent) => {
+                            return (
+                            <div id={username === messagecontent.author ? "you" : "other"}>
+                                <p>{messagecontent.author} : {messagecontent.message}</p>
+                           </div>
+                            )
+                        })
+                        }
+                    </div>
+                    
+                    <div className='buttons'>
+                    <input placeholder='Type Something...' value={currentMessage} onChange={(event) => {setCurrentMessage(event.target.value) }} onKeyPress={(event) => {
+            event.key === "Enter" && sendMessage();
+          }} /> <button onClick={sendMessage}><FiSend size={20}/></button>
+                    </div>
+                    
+                </div>
             </div>
             
             </div>

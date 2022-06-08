@@ -5,9 +5,6 @@ import { ContextProvider } from './SocketContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <ContextProvider>
         <App />
-    </ContextProvider>
-    
 );
 
