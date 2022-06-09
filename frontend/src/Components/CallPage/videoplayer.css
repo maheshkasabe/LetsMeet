@@ -17,7 +17,7 @@ body{
     justify-content: center;
     text-align: center;
     height: 30px;
-    width: 100vmax;
+    width: 100%;
     color: white;
     background-color: grey;
     align-items: center;
@@ -58,7 +58,7 @@ body{
 }
 
 .btns2 button{
-    width: 190px;
+    width: 120px;
     height: 30px;
     background-color: darkgrey;
     color: white;
@@ -105,16 +105,22 @@ body{
 }
 
 .chat-content{
-    height:  720px;
+    height:  770px;
     margin-left: 5px;
+}
+
+.conversation{
+    text-align: center;
+    font-size: medium;
 }
 
 .buttons input{
     text-align: left;
     height: 40px;
     font-size: medium;
-    width: 415px;
+    width: 100%;
     display: flex;
+    font-weight: 900;
 }
 
 .buttons{
@@ -128,17 +134,31 @@ body{
 }
 
 #other{
-    height: 40px;
+    height: 55px;
     border: 1px solid lightgray;
-    background-color: azure;
+    background-color: lightgray;
     text-align: left;
-    margin: 2px;
+    font-size: medium;
+    margin: 3px;
+    border-radius: 5px;
 }
 
+#other p {
+    margin: 1px;
+}
+
+#you p{
+    margin: 1px;
+}
+
+
 #you{
-    height: 40px;
+    height: 55px;
+    justify-content: right;
     border: 1px solid lightgray;
-    background-color: cornflowerblue;
+    background-color: lightseagreen;
     text-align: right;
-    margin: 2px;
+    font-size: medium;
+    margin: 3px;
+    border-radius: 5px;
 }

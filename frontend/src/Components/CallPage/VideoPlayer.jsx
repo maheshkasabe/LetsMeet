@@ -1,13 +1,23 @@
-import React, { useState,useEffect } from 'react'
-//import { SocketContext } from '../../SocketContext'
+import React, { useState,useEffect,useContext } from 'react'
+import { SocketContext } from '../../SocketContext'
 import "./videoplayer.css"
 import { BsFillMicFill,BsFillCameraVideoFill,BsFillPersonPlusFill,BsClipboardCheck } from "react-icons/bs"
 import { HiPhoneMissedCall } from "react-icons/hi"
 import {FiSend } from "react-icons/fi"
-import { useNavigate } from 'react-router-dom'
 
 const VideoPlayer = ({ socket, username, room }) => {
-    //const {  stream,userVideo,myVideo,ended,accepted,me,leavecall } = useContext(SocketContext);
+    const {    call,
+        callAccepted,
+        myVideo,
+        userVideo,
+        stream,
+        name,
+        setName,
+        callEnded,
+        me,
+        callUser,
+        leaveCall,
+        answerCall, } = useContext(SocketContext);
 
     const [currentMessage, setCurrentMessage] = useState("");
     const [messageList, setMessageList] = useState([]);
@@ -36,6 +46,7 @@ const VideoPlayer = ({ socket, username, room }) => {
     });
   }, [socket]);
 
+  console.log(me);
 
     return (
         <div className='videoplayer'>
@@ -47,12 +58,12 @@ const VideoPlayer = ({ socket, username, room }) => {
                     <div className='btns1'>
                     <button>Mute <BsFillMicFill /> </button>
                     <button> Stop Video <BsFillCameraVideoFill /> </button>
-                   <button> Copy Meeting Code <BsClipboardCheck /> </button> 
+                    <button onClick={() => {navigator.clipboard.writeText(me)}}> Copy Meeting Code <BsClipboardCheck /> </button>
                     <button> invite <BsFillPersonPlusFill /> </button>
                     </div>
 
                     <div className='btns2'>
-                    <button ><HiPhoneMissedCall /> Leave</button>
+                    <button onClick={leaveCall}><HiPhoneMissedCall /> Leave</button>
                     </div>
                 </div>
             </div>
@@ -60,20 +71,33 @@ const VideoPlayer = ({ socket, username, room }) => {
             <div className='broadcast'>
             <div className='meet'>
 
-            {/* { stream && (
-                <video playsInline muted ref={myVideo} autoPlay />
+            { stream && (
+                <div>
+                    <p>{name}</p>
+                    <video playsInline muted ref={myVideo} autoPlay />
+                </div>
+                
             )}
 
-            {accepted && (
-                <video playsInline muted ref={userVideo} autoPlay />
-            )} */}
-
+            {callAccepted && !callEnded &&  (
+                    <div>
+                        <p>{call.name}</p>
+                        <video playsInline muted ref={userVideo} autoPlay />
+                     </div>
+            )}
 
             </div>
             
             <div className='chat'>
                 <div className='participants'>
-                        <p>Participants </p>
+                    {
+                        call.isReceivingCall && !callAccepted && (
+                            <div>
+                            <p>{call.name} is calling  <button onClick={answerCall}> Ans</button></p>
+                            </div>
+                        )
+                    }
+                       
 
                 </div>
 
@@ -85,6 +109,7 @@ const VideoPlayer = ({ socket, username, room }) => {
                             return (
                             <div id={username === messagecontent.author ? "you" : "other"}>
                                 <p>{messagecontent.author} : {messagecontent.message}</p>
+                                <p>{messagecontent.time}</p>
                            </div>
                             )
                         })
