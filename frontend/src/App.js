@@ -5,7 +5,7 @@ import main from "./main-logo.png"
 import { io } from 'socket.io-client'
 import VideoPlayer from '../src/Components/CallPage/VideoPlayer'
 
-const socket = io.connect("http://localhost:3001");
+const socket = io.connect("https://lets-meet010.herokuapp.com/");
 
 const App = () => {
   const {    setName,callUser } = useContext(SocketContext);

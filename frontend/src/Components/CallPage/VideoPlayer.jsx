@@ -5,6 +5,7 @@ import { BsFillMicFill,BsFillCameraVideoFill,BsFillPersonPlusFill,BsClipboardChe
 import { HiPhoneMissedCall } from "react-icons/hi"
 import {FiSend } from "react-icons/fi"
 import { Scrollbars } from 'react-custom-scrollbars';
+import emailjs from "emailjs-com"
 
 const VideoPlayer = ({ socket, username, room }) => {
     const {    call,
@@ -49,8 +50,16 @@ const VideoPlayer = ({ socket, username, room }) => {
   }, [socket]);
 
   const sendemail = () => {
+    var templateParams = {
+        me: me
+    };
     const email = prompt("Enter Email");
-    setMail(email);
+    emailjs.send('service_p7j2klh', 'template_8orjham', templateParams, 'HOrGbLD_NcUN6DKls')
+    .then(function(response) {
+       alert("Sent");
+    }, function(error) {
+       console.log('FAILED...', error);
+    });
   }
 
     return (
@@ -87,7 +96,7 @@ const VideoPlayer = ({ socket, username, room }) => {
             {callAccepted && !callEnded &&  (
                     <div>
                         <p>{call.name}</p>
-                        <video playsInline muted ref={userVideo} autoPlay />
+                        <video playsInline ref={userVideo} autoPlay />
                      </div>
             )}
 
