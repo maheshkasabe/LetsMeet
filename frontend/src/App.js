@@ -1,26 +1,14 @@
 import React, { useState,useContext } from 'react'
 import { SocketContext } from './SocketContext'
 import "./App.css"
-import icon from "./icon.png"
 import main from "./main-logo.png"
-import { Socket,io } from 'socket.io-client'
+import { io } from 'socket.io-client'
 import VideoPlayer from '../src/Components/CallPage/VideoPlayer'
 
 const socket = io.connect("http://localhost:3001");
 
 const App = () => {
-  const {       call,
-    callAccepted,
-    myVideo,
-    userVideo,
-    stream,
-    name,
-    setName,
-    callEnded,
-    me,
-    callUser,
-    leaveCall,
-    answerCall, } = useContext(SocketContext);
+  const {    setName,callUser } = useContext(SocketContext);
 
   const [idToCall, setIdToCall] = useState("");
   const [username, setUsername] = useState("");
@@ -59,7 +47,7 @@ const App = () => {
        
                  </div>
                  <div className='contain2'>
-                     <img src={main} />
+                     <img src={main} alt='/' />
                  </div>
                </div>
             </div>

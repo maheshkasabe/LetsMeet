@@ -4,6 +4,7 @@ import "./videoplayer.css"
 import { BsFillMicFill,BsFillCameraVideoFill,BsFillPersonPlusFill,BsClipboardCheck } from "react-icons/bs"
 import { HiPhoneMissedCall } from "react-icons/hi"
 import {FiSend } from "react-icons/fi"
+import { Scrollbars } from 'react-custom-scrollbars';
 
 const VideoPlayer = ({ socket, username, room }) => {
     const {    call,
@@ -21,6 +22,7 @@ const VideoPlayer = ({ socket, username, room }) => {
 
     const [currentMessage, setCurrentMessage] = useState("");
     const [messageList, setMessageList] = useState([]);
+    const [mail, setMail] = useState("");
 
     const sendMessage = async () => {
       if (currentMessage !== "") {
@@ -46,7 +48,10 @@ const VideoPlayer = ({ socket, username, room }) => {
     });
   }, [socket]);
 
-  console.log(me);
+  const sendemail = () => {
+    const email = prompt("Enter Email");
+    setMail(email);
+  }
 
     return (
         <div className='videoplayer'>
@@ -59,7 +64,7 @@ const VideoPlayer = ({ socket, username, room }) => {
                     <button>Mute <BsFillMicFill /> </button>
                     <button> Stop Video <BsFillCameraVideoFill /> </button>
                     <button onClick={() => {navigator.clipboard.writeText(me)}}> Copy Meeting Code <BsClipboardCheck /> </button>
-                    <button> invite <BsFillPersonPlusFill /> </button>
+                    <button onClick={sendemail}> invite <BsFillPersonPlusFill /> </button>
                     </div>
 
                     <div className='btns2'>
@@ -93,17 +98,18 @@ const VideoPlayer = ({ socket, username, room }) => {
                     {
                         call.isReceivingCall && !callAccepted && (
                             <div>
-                            <p>{call.name} is calling  <button onClick={answerCall}> Ans</button></p>
+                            <p>{call.name} wants to join the meeting   <button onClick={answerCall}> Accept </button></p>
                             </div>
                         )
                     }
                        
 
                 </div>
-
+                
+                
                 <div className='conversation'>
                     <p>Meeting Chat</p>
-
+                    <Scrollbars style={{  height: "81vh" }}>
                     <div className='chat-content'>
                         {messageList.map((messagecontent) => {
                             return (
@@ -115,6 +121,7 @@ const VideoPlayer = ({ socket, username, room }) => {
                         })
                         }
                     </div>
+                    </Scrollbars>
                     
                     <div className='buttons'>
                     <input placeholder='Type Something...' value={currentMessage} onChange={(event) => {setCurrentMessage(event.target.value) }} onKeyPress={(event) => {
