@@ -8,12 +8,12 @@ Let's Meet is a One-O-One Video calling application with some intigrated feature
 
 I successfully implemented the video calling feature.I also implemented:
 
-Adding own name to profile with which you join the meeting
-Update whenever somebody joins or leaves the meeting
-Copy URL in-meeting
-Chatbox
-Send invitation through email 
-Leave meeting
+1. Adding own name to profile with which you join the meeting
+2. Update whenever somebody joins or leaves the meeting
+3. Copy URL in-meeting
+4. Chatbox
+5. Send invitation through email 
+6. Leave meeting
 
 ## Running App on your local system 
 
@@ -42,9 +42,9 @@ Technologies Used
 
 
 1. Node.js
-2. HTML 
-3. CSS 
-4. Bootstrap
+2. ReactJS 
+3. Express 
+4. EmailJS
 5. JavaScript
 6. WebRTC
 7. Socket.io
