@@ -1,10 +1,10 @@
-#Let's Meet 
+# Let's Meet 
 
-##Description 
+## Description 
 
 Let's Meet is a One-O-One Video calling application with some intigrated features such as Live Chatting and Sending invitation through Email . It is made up of Reactjs,Nodejs , Socket.io and WebRTC
 
-##What is the end-result ??
+## What is the end-result ??
 
 I successfully implemented the video calling feature.I also implemented:
 
@@ -15,7 +15,7 @@ Chatbox
 Send invitation through email 
 Leave meeting
 
-##Running App on your local system 
+## Running App on your local system 
 
 ```bash
 
@@ -49,7 +49,7 @@ Technologies Used
 6. WebRTC
 7. Socket.io
 
-##Demo
+## Demo
 
 live app : 
 
