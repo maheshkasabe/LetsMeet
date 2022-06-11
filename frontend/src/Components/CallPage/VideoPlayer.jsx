@@ -7,7 +7,7 @@ import {FiSend } from "react-icons/fi"
 import { Scrollbars } from 'react-custom-scrollbars';
 import emailjs from "emailjs-com"
 
-const VideoPlayer = ({ socket, username, room }) => {
+const VideoPlayer = ({ socket, room }) => {
     const {    call,
         callAccepted,
         myVideo,
@@ -29,7 +29,7 @@ const VideoPlayer = ({ socket, username, room }) => {
       if (currentMessage !== "") {
         const messageData = {
         room: room,
-        author: username,
+        author: name,
         message: currentMessage,
         time:
           new Date(Date.now()).getHours() +
@@ -50,15 +50,17 @@ const VideoPlayer = ({ socket, username, room }) => {
   }, [socket]);
 
   const sendemail = () => {
-    var templateParams = {
-        me: me
-    };
     const email = prompt("Enter Email");
+    setMail(email);
+    var templateParams = {
+        me: me,
+        mail : mail
+    };
     emailjs.send('service_p7j2klh', 'template_8orjham', templateParams, 'HOrGbLD_NcUN6DKls')
     .then(function(response) {
        alert("Sent");
     }, function(error) {
-       console.log('FAILED...', error);
+       alert('FAILED...', error);
     });
   }
 
@@ -85,7 +87,7 @@ const VideoPlayer = ({ socket, username, room }) => {
             <div className='broadcast'>
             <div className='meet'>
 
-            { stream && (
+            {stream &&(
                 <div>
                     <p>{name}</p>
                     <video playsInline muted ref={myVideo} autoPlay />
@@ -96,7 +98,7 @@ const VideoPlayer = ({ socket, username, room }) => {
             {callAccepted && !callEnded &&  (
                     <div>
                         <p>{call.name}</p>
-                        <video playsInline ref={userVideo} autoPlay />
+                        <video playsInline muted ref={userVideo} autoPlay />
                      </div>
             )}
 
@@ -122,7 +124,7 @@ const VideoPlayer = ({ socket, username, room }) => {
                     <div className='chat-content'>
                         {messageList.map((messagecontent) => {
                             return (
-                            <div id={username === messagecontent.author ? "you" : "other"}>
+                            <div id={name === messagecontent.author ? "you" : "other"}>
                                 <p>{messagecontent.author} : {messagecontent.message}</p>
                                 <p>{messagecontent.time}</p>
                            </div>

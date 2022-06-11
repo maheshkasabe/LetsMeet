@@ -9,7 +9,7 @@ const socket = io('https://lets-meet010.herokuapp.com/');
 const ContextProvider = ({ children }) => {
   const [callAccepted, setCallAccepted] = useState(false);
   const [callEnded, setCallEnded] = useState(false);
-  const [stream, setStream] = useState();
+  const [stream, setStream] = useState("");
   const [name, setName] = useState('');
   const [call, setCall] = useState({});
   const [me, setMe] = useState('');
@@ -19,10 +19,9 @@ const ContextProvider = ({ children }) => {
   const connectionRef = useRef();
 
   useEffect(() => {
-    navigator.mediaDevices.getUserMedia({ video: true, audio: true })
-      .then((currentStream) => {
+    navigator.mediaDevices.getUserMedia({ video: true, audio: true }).then((currentStream) => {
         setStream(currentStream);
-
+        console.log(currentStream);
         myVideo.current.srcObject = currentStream;
       });
 

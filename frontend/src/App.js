@@ -8,7 +8,7 @@ import VideoPlayer from '../src/Components/CallPage/VideoPlayer'
 const socket = io.connect("https://lets-meet010.herokuapp.com/");
 
 const App = () => {
-  const {    setName,callUser } = useContext(SocketContext);
+  const {  setName,callUser } = useContext(SocketContext);
 
   const [idToCall, setIdToCall] = useState("");
   const [username, setUsername] = useState("");
@@ -38,10 +38,10 @@ const App = () => {
                  
                  <div className='inputs'>
                 <div className='input1'> <input id='btn1' placeholder='Enter Name' onChange={(e) => setName(e.target.value)} /> 
-                <button id='btn2' >New Meeting </button> </div>
+                <button id='btn2' onClick={func}>New Meeting </button> </div>
                  <div className='input2'> 
                  <input id='btn3' placeholder='Enter Meeting Code' onChange={(e) => setIdToCall(e.target.value)} />
-                  <input id='btn4' placeholder='Enter Name' onChange={(e) => setUsername(e.target.value)} /> 
+                  <input id='btn4' placeholder='Enter Name' onChange={(e) => setName(e.target.value)} />
                   <button id='btn5' onClick={func}> Join Meeting </button> </div>
                  </div>
        
