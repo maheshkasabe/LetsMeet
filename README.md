@@ -53,7 +53,7 @@ Technologies Used
 
 live app : 
 
-video demo : 
+video demo : https://letsmeetapp.netlify.app/
 
 
 
